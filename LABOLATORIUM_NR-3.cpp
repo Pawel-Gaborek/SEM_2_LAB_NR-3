@@ -1,12 +1,3 @@
-//
-//  LABOLATORIUM_NR-3.cpp
-//  LABOLATORIUM_NR-3
-//
-//  Created by Paweł Gaborek on 15/04/2019.
-//  Copyright © 2019 Paweł Gaborek. All rights reserved.
-//
-
-#include "LABOLATORIUM_NR-3.hpp"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -15,7 +6,7 @@
 
 using namespace std;
 
-//ponizej tworze klase z konstruktorem dla nazwy zespolu
+//ponizej definiuje klase dla nazw zesolow. W tej klasie dla odmiany korzystam z konstruktora.
 class TeamName
 {
 public:
@@ -27,105 +18,85 @@ public:
         
     }
 };
-    
 
-//ponizej tworze strukture z danymi zawodnika pojedynczego
+//ponizej definiuje klase dla pojedynczego zawodnika. W c++ praktycznie struktura i klasa sie niewiele roznia,
+//jednak klasa mi umozliwa definiowanie dostepnu do ziennych
 class PersonalOfPlayer
 {
-    public:
+//definiuje zmienne do ktorych jest ogolny dostep w klasie publicznej
+public:
     string PlayerName;
     string PlayerSurname;
     string PlayerHeight;
     string PlayerAge;
     string PlayerPosition;
-    //ponizej tworze metode przypisania do struktury odpowiednich danych
-    PersonalOfPlayer(string getName, string getSurname, string getHeight, string getAge, string getPosition):
-    PlayerName(getName),
-    PlayerSurname(getSurname),
-    PlayerHeight(getHeight),
-    PlayerAge(getAge),
-    PlayerPosition(getPosition)
-    {
-        
-    }
 };
 
-//rozpoczynam pisanie kodu dla klasy grupujacej zawodnikow do okreslonej druzyny
-class TeamNumberTeam
+//ponizej okreslam klase kopiujaca. Korzystam dodatkowo z konstruktora.
+class CopyTeam
 {
-    //team(vector<PersonalOfPlayer>)
-    //ponizej w czesci publicznej tworze funkcjie
-    public:
-    //string nameOfTeam;
-    //vector < PersonalOfPlayer > Team;
-    
-    //TeamNumberTeam(string nameTeam, vector < PersonalOfPlayer > teamPlayer):
-    //nameOfTeam(nameTeam), Team(teamPlayer)
-    //{
-        
-    //}
-    //vector < vector < PersonalOfPlayer > > TeamNumberTeam;
-    
-};
-//rozpoczynam pisanie kodu dla konstruktora kopiujacego zawodnikow druzyny nr 2 do druzyny nr 3
-
-/*class CopyConstructorTeamPlayers
-{
-    public:
-CopyConstructorTeamPlayers():
-        //CopyTeam(const CopyTeam &);
-    {
-        
-    }
-    private:
-    vector<PersonalOfPlayer> real;
-    vector<PersonalOfPlayer> imaginary;
-};
-*/
-
-//ponizej tworze klase wypisujaca wszystkich zawodnikow
-/*class printPlayers;
-{
-    
+//ponizej definiuje konstruktor CopyTeam.
+public:
+    CopyTeam(const CopyTeam&);
 private:
-    printPlayers(char choice):
-    {
-        if (choice=='t')
-        {
-            
-        }
-    }
+//w przestrzeni prywatnej definiuje zmienne i ich typy
+    string PlayerName_Copy;
+    string PlayerSurname_Copy;
+    string PlayerHeight_Copy;
+    string PlayerAge_Copy;
+    string PlayerPosition_Copy;
 };
-*/
+//Poza klasa pisze metode dla konstruktora.
+CopyTeam::CopyTeam(const PersonalOfPlayer &source)
+{
+    PlayerName_Copy=source.PlayerName;
+    PlayerSurname_Copy=source.PlayerSurname;
+    PlayerHeight_Copy=source.PlayerHeight;
+    PlayerAge_Copy=source.PlayerAge;
+    PlayerPosition_Copy=source.PlayerPosition;
+}
 
 
-//rozpoczynam funkcjie glowna
+
+
+//vector(const vector& v); konstruktor kopiujacy
+//vector& operator=(const vector& v);4
+
 int main()
 {
-    using namespace std;
-    //ponizej definiuje zmienne i ich typy (glownie dla menu kontekstowego dla menu uzytkownika)
-    char choice;
-    int exit = 0;
-    char continuation;
+    int PlayersNumber;
     int TeamNumbers;
-    int numberPlayers;
-    int i;
-    int j;
-    int k;
-    int l;
-    string teamTeam;
-    string name;
-    int YourNumber;
-    int YorNumberPlayer;
+    int team_number;
+    int player_number;
+    char choice;
     char choice2;
     char choice3;
-    char choice4;
-    int z;
-    int x;
-    int c;
+    char continuation;
+    string GetTeamName;
+    int exit = 0;
+    
+    using namespace std;
+    
+    
     
     while(exit==0)
     {
+        //ponizej definiuje wektor z nazwami druzyn. Wypelniam go inna metoda poprzez tzw "push backi"
+        vector<TeamName>teamTeam;
+        //ponizej podaj w nawiasach < typ zmiennej > jakim bedzie wypelniony moj kontener jednego zawodnika.
+        //Mogle wybrac integera, char itp., jednak na potrzeby programu pojedynczy kontener zawodnika nalezy
+        //wypelnic innym typem, a mianowicie typem struktury z klasy ktora zostala utworzona i dodatkowo
+        //zostal stworzony konstruktor "PersonalOfPlayer. W C++ struktura "struct" i klasa "class"
+        //sa bardzo pododbne
+        typedef vector<PersonalOfPlayer>OnePlayer;
+        //Ponizej tworze kontener dla zespolu pojedynczego ktory zawiera w sobie struktury informacji o
+        //pojedynczych zawodnikach. Czyli wypelniam kontener "OneTeam" pojedynczym kontenerami = zawodnikami,
+        //co czynie podajac liczbe iteracji w petli.
+        //ponizej takze przekazuje informacje, że wypełnienie kontenera "OneTeam" bedzie dokonane poprzez
+        //typ którym jest wektor "OnePlayer". Tak tworzę drużynę.
+        typedef vector<OnePlayer>OneTeam;
+        //ponizej tworze wektor ktory bedzie grupowac wszystkie zespoly do kontenerka "ChampionsLeage"
+        typedef vector<OneTeam>championsLeage;
         cout << "Super ! Wlasnie uruchomiles program do labolatorium nr 3 na kierunku Informatyka\n";
         cout << "Program umozliwi Ci stworzenie kilku druzyn. Od 2 do ''n''.\n";
         cout << "Jezeli bedziesz chcial to bedziesz mogl przekopiowac za pomoca konstruktora zawodnikow\n";
@@ -134,178 +105,135 @@ int main()
         cout << "\n\n\n";
         cout << "Podaj liczbe druzyn ktore maja wystapic w lidze mistrzow w sezonie 2020/21: \n";
         cin >> TeamNumbers;
-        
-   
         cout << "\n Super ! Teraz podaj ile zawodnikow moze liczyc kazda druzyna dopuszczona do turnieju:\n";
-        cin >> numberPlayers;
-        cout << "Super ! Teraz mozesz podac dane kazdego zawodnika oraz nazwe druzyny";
-        cout << "\n\n\n";
-        //ponizej podaj w nawiasach < typ zmiennej > jakim bedzie wypelniony moj kontener jednego zawodnika.
-        //Mogle wybrac integera, char itp., jednak na potrzeby programu pojedynczy kontener zawodnika nalezy
-        //wypelnic innym typem, a mianowicie typem struktury z klasy ktora zostala utworzona i dodatkowo
-        //zostal stworzony konstruktor "PersonalOfPlayer. W C++ struktura "struct" i klasa "class"
-        //sa bardzo pododbne
+        cin >> PlayersNumber;
+        //ponizej definiuje wektor wielowymiarowy z okreslona liczba druzyn oraz zawodnikow
+        championsLeage TheBestOfTheBest(1, OneTeam(TeamNumbers, OnePlayer(PlayersNumber) ) );
         
-        vector < PersonalOfPlayer > OnePlayer;
         
-        //Ponizej tworze kontener dla zespolu pojedynczego ktory zawiera w sobie struktury informacji o
-        //pojedynczych zawodnikach. Czyli wypelniam kontener "OneTeam" pojedynczym kontenerami = zawodnikami,
-        //co czynie podajac liczbe iteracji w petli.
-        //ponizej takze przekazuje informacje, że wypełnienie kontenera "OneTeam" bedzie dokonane poprzez
-        //typ którym jest wektor "OnePlayer". Tak tworzę drużynę.
-        
-        vector < vector < PersonalOfPlayer > > OneTeam;
-        
-        //ponizej tworze wektor ktory bedzie grupowac wszystkie zespoly do kontenerka "ChampionsLeage"
-        vector < vector < vector < PersonalOfPlayer > > > ChampionsLeage;
-        
-        //ponizej tworze wektor dla nazw zespolow. Podaje takze typ ktorymi ma byc wypelniony.
-        vector < TeamName > Team_Name_Name;
         
         //ponizej tworze petle w petli ktora ma zadanie dodac druzyny i zawodnikow do poszczegolnych druzyn
-        for ( l=0 ; l<TeamNumbers ; l++)
+        for (int j=0 ; j<TeamNumbers ; j++)
         {
-            //ponizej pobieram od uzytkownika nazwe druzyny ktora pozniej przekaze do konstruktora
-            //z nazwami druzyn TeamName.
-            cout << "\nPodaj nazwe druzyny nr:\t" << l+1 << "\n";
-            cin >> teamTeam;
             
-            Team_Name_Name.push_back(teamTeam);
+            cout << "\nPodaj nazwe druzyny nr:" << j+1 << endl;
+            cin >> GetTeamName;
+            teamTeam.push_back(TeamName(GetTeamName));
             
-            //ponizej petla wypelniam kontener "OneTeam" zawodnikami. Czyli dodaje do kontenera okreslona
-            //ilosc innych kontenerkow = zawodnikow
-            
-            for ( k=0 ; k<numberPlayers ; k++)
+            for (int i=0 ; i<PlayersNumber ; i++)
             {
-                OneTeam.push_back(OnePlayer);
-            }
-            
-            //ponizej wypelniem wekor druzyny zawodnikami (wektorem z zawodnikami)
-            
-            
-            
-            //ponizej za pomoca petli wypelniam kontenerek z pojedynczym zawodnikiem
-            for ( j=0 ; j<numberPlayers ; j++)
-            {
-                cout << "\nPodaj nazwisko zawodnika nr\t" << j+1 << "\t dla druzyny numer:" << l+1 << ":\n";
+                cout << "\nPodaj nazwisko zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string name;
                 cin >> name;
-                cout << "\nPodaj imie zawodnika nr\t" << j+1 << "\t dla druzyny numer:" << l+1 << ":\n";
+                TheBestOfTheBest[0][j][i].PlayerName=name;
+                
+                cout << "\nPodaj imie zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string surname;
                 cin >> surname;
-                cout << "\nPodaj wzrost zawodnika nr\t" << j+1 << "\t dla druzyny numer:" << l+1 << ":\n";
+                TheBestOfTheBest[0][j][i].PlayerSurname=surname;
+                
+                cout << "\nPodaj wzrost zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string height;
                 cin >> height;
-                cout << "\nPodaj wiek zawodnika nr\t" << j+1 << "\t dla druzyny numer:" << l+1 << ":\n";
+                TheBestOfTheBest[0][j][i].PlayerHeight=height;
+                
+                cout << "\nPodaj wiek zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string age;
                 cin >> age;
-                cout << "\nPodaj pozycje zawodnika nr\t" << j+1 << "\t dla druzyny numer:" << l+1 << ":\n";
+                TheBestOfTheBest[0][j][i].PlayerAge=age;
+                
+                cout << "\nPodaj pozycje zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string position;
                 cin >> position;
-                //ponizej dodaje zawodnika do kontenera, jego dane poprzez konstruktor.
-                OnePlayer.push_back(PersonalOfPlayer(name, surname, height, age, position));
-                
+                TheBestOfTheBest[0][j][i].PlayerPosition=position;
             }
-            
-            //ponizej dodaje zawdnikow do kontenerka okreslonej druzyny
-            
-            
-            
-            cout << "\nSuper ! Wlasnie podales dane zawodnikow dla druzyny nr:" << l+1 << "\n";
-            cout << "Ponizej sprawdzimy czy dane zostana wyswietlone poprawnie\n";
             //ponizej aby sprawdzic czy wprowadzilem poprawnie korzystam z petli iteracyjnej do wypisania
             //poszczegolnych danych pojedynczego zawodnika
-            for ( i=0 ; i<numberPlayers ; i++)
+            for ( int ii=0 ; ii<PlayersNumber ; ii++)
             {
-                cout << "\nNazwisko zawodnika nr:\t" << i+1 << " to " << OnePlayer[i].PlayerName;
-                cout << "\nImie zawodnika nr:\t" << i+1 << " to " << OnePlayer[i].PlayerSurname;
-                cout << "\nWzrost zawodnika nr:\t" << i+1 << " to " << OnePlayer[i].PlayerHeight;
-                cout << "\nWiek zawodnika nr:\t" << i+1 << " to " << OnePlayer[i].PlayerAge;
-                cout << "\nPozycja zawodnika nr:\t" << i+1 << " to " << OnePlayer[i].PlayerPosition << "\n";
+                cout << "\nNazwisko zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerName;
+                cout << "\nImie zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerSurname;
+                cout << "\nWzrost zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerHeight;
+                cout << "\nWiek zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerAge;
+                cout << "\nPozycja zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerPosition;
             }
         }
         
-        //ponizej dodaje kontenerek z zespolem w ktorym sa zawodnicy do rozgrywek, w tym przy przypadku
-        //uznalem ze wszystkie zespoly sie zakwalifikowaly, ale  oglbym zrobic przykladowo
-        //inny konterek z rozgrywkami "Liga Europy"
-        
-        ChampionsLeage.push_back(OneTeam);
-        
-        //ponizej sprawdzam czy strukture poprawnie utworzylem
-        //tworze do tego celu dwie opcje wyswietlania zawartosci wektorow
-        //pierwszy poprzez po kolei wyswietlenie kazdej druzyny i kazdego zawodnika
-        //oraz drugi gdzie uzytkownik ma wybor ktorego zawodnika z ktorej druzyny chce wyswietlic
-        
-        
-        cout << "Size wektora ChampionsLeage: " << ChampionsLeage.size() << '\n';
-        cout << "Size wektora OneTeam: " << OneTeam.size() << '\n';
-        cout << "Size wektora OnePlayer: " << OnePlayer.size() << '\n';
-        cout << "Size wektora Team_Name_Name: " << Team_Name_Name.size() << '\n';
-        
-        
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        cout << "Czy chcesz utworzyc kolejna druzyne ktora bedzie kopia ostatiej ??";
+        //ponizej kopiuje do wektora mowa druzyne
+        cout << "Czy chcesz utworzyc kolejna druzyne i skopiowac zawodnikow z ostatniej druzyny ??";
         cout << "W przypadku ponownego uruchomienia wpisz litere ''t'', w przerciwnym razie wpisz litere ''n''.";
-        cin >> choice2;
-        if ( choice2 == 't')
+        if (choice2 == 't')
         {
-            cout << "Podaj nazwe kolejnej druzyny";
+            //championsLeage TheBestOfTheBest(1, OneTeam(TeamNumbers+1, OnePlayer(PlayersNumber) ) );
+            //teamTeam.push_back(TeamName(GetTeamName));
+            //CopyTeam(TheBestOfTheBest);
+            
         }
         else
         {
-            cout << "No niestety, przykro mi, le najwidoczniej nie chcesz dodac kolejnej druzyny";
-            cout << "Moze nastepnym razem";
-            cin >> teamTeam;
-            Team_Name_Name.push_back(teamTeam);
-            ChampionsLeage.push_back(OneTeam);
+            cout << "Niestety zdecydowales by nie dodawac kolejnej druzyny.";
+            cout << "Ale masz ponizej jeszcze opcje wyswietlania druzyn i zawodnikow.";
         }
         
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
+        //ponizej wyswietlam wszystkich zawodnikow
         cout << "\nCzy chcesz wyswietlic zawodnikow ze wszystkich druzyn ??";
         cout << "\nW przypadku wyboru ''tak'' wpisz litere ''t'', w przerciwnym razie wpisz litere ''n''.";
         cin >> choice3;
         if (choice3 == 't')
         {
-                for ( x=0 ; x<TeamNumbers ; x++)
+            for (int ij=0 ; ij<TeamNumbers  ; ij++)
+            {
+                cout << "\n\n\nZawodnicy druzyny " << teamTeam[ij].nameOfTeam << "maja nastepujace dane:\n";
+                
+                for ( int io=0 ; io<PlayersNumber ; io++)
                 {
-                    cout << "Ponizej zostana wypisani zawodnicy z druzyny:\t" << Team_Name_Name[x].nameOfTeam;
-                    for ( c=0 ; c<numberPlayers ; c++ )
-                    {
-                        cout << "\nNazwisko zawodnika nr:\t" << c << " to: " << ChampionsLeage[0][x][c].PlayerName;
-                        cout << "\nImie zawodnika:\t" << c << " to: " << ChampionsLeage[0][x][c].PlayerSurname;
-                        cout << "\nWzrost zawodnika:\t" << c << " to: " << ChampionsLeage[0][x][c].PlayerHeight;
-                        cout << "\nWiek zawodnika:\t" << c << " to: " << ChampionsLeage[0][x][c].PlayerAge;
-                        cout << "\nPozycja zawodnika:\t" << c << " to: " << ChampionsLeage[0][x][c].PlayerPosition << "\n";
-                    }
+                    cout << "\nNazwisko zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerName;
+                    cout << "\nImie zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerSurname;
+                    cout << "\nWzrost zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerHeight;
+                    cout << "\nWiek zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerAge;
+                    cout << "\nPozycja zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerPosition;
                 }
+            }
         }
-            
+        
         else
         {
             cout << "Niestety zdecydowales by nie wyswietlac calej listy druzyn i zawodnikow";
             cout << "Ale masz ponizej jeszcze jedna opcje do wyboru.";
         }
         
-        
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
-        
-        
+        //ponizej wyswietlam okreslonego zawodnika
         cout << "Czy chcesz wyswietlic dane okreslonego zawodnika z okreslonej druzyny ??";
         cout << "W przypadku ponownego uruchomienia wpisz litere ''t'', w przerciwnym razie wpisz litere ''n''.";
-        cin >> choice4;
-        if (choice3 == 't')
+        cin >> choice;
+        if(choice=='t')
         {
-            
+            cout << "Podaj numer druzyny ktorej dane zawodnika chcesz wyswietlic\n";
+            cin >> team_number;
+            cout << "Podaj numer zawodnika ktoreg dane chcesz wyswietlic\n";
+            cin >> player_number;
+            cout << "Zawodnik druzyny " << teamTeam[team_number].nameOfTeam << " ma nastepujace dane:";
+            cout << "n\nazwisko zawodnika:";
+            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerName << "\n" << endl;
+            cout << "Imie zawodnika:";
+            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerSurname << "\n" << endl;
+            cout << "Wzrost zawodnika:";
+            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerHeight << "\n" << endl;
+            cout << "Wiek zawodnika:";
+            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerAge << "\n" << endl;
+            cout << "Pozycja na boisku zawodnika:";
+            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerPosition << "\n" << endl;
         }
         else
         {
-            cout << "Niestety zdecydowales by nie wyswietlac danych okreslonego zawodnika.";
-            cout << "Moze nastepnym razem.";
+            cout << "Niestety, niechcesz dodac kolejnej druzyny, moze nastepnym razem";
         }
-        
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         
@@ -327,8 +255,8 @@ int main()
             }
             
         }
-            cout << "Szkoda ze nie chcesz ponownie uruchomic programu";
-            cout << "Moze nastepnycm razem. Powodzenia !!!";
+        cout << "Szkoda ze nie chcesz ponownie uruchomic programu";
+        cout << "Moze nastepnycm razem. Powodzenia !!!";
     }
     return 0;
 }
