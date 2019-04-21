@@ -40,23 +40,21 @@ public:
     CopyTeam(const CopyTeam&);
 private:
 //w przestrzeni prywatnej definiuje zmienne i ich typy
-    string PlayerName_Copy;
-    string PlayerSurname_Copy;
-    string PlayerHeight_Copy;
-    string PlayerAge_Copy;
-    string PlayerPosition_Copy;
+    string PlayerName;
+    string PlayerSurname;
+    string PlayerHeight;
+    string PlayerAge;
+    string PlayerPosition;
 };
 //Poza klasa pisze metode dla konstruktora.
-CopyTeam::CopyTeam(const PersonalOfPlayer &source)
+CopyTeam::CopyTeam(const CopyTeam &source)
 {
-    PlayerName_Copy=source.PlayerName;
-    PlayerSurname_Copy=source.PlayerSurname;
-    PlayerHeight_Copy=source.PlayerHeight;
-    PlayerAge_Copy=source.PlayerAge;
-    PlayerPosition_Copy=source.PlayerPosition;
+    PlayerName=source.PlayerName;
+    PlayerSurname=source.PlayerSurname;
+    PlayerHeight=source.PlayerHeight;
+    PlayerAge=source.PlayerAge;
+    PlayerPosition=source.PlayerPosition;
 }
-
-
 
 
 //vector(const vector& v); konstruktor kopiujacy
@@ -71,9 +69,11 @@ int main()
     char choice;
     char choice2;
     char choice3;
+    char choice4;
     char continuation;
     string GetTeamName;
     int exit = 0;
+    int NewTeamNumbers;
     
     using namespace std;
     
@@ -162,14 +162,23 @@ int main()
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         //ponizej kopiuje do wektora mowa druzyne
-        cout << "Czy chcesz utworzyc kolejna druzyne i skopiowac zawodnikow z ostatniej druzyny ??";
-        cout << "W przypadku ponownego uruchomienia wpisz litere ''t'', w przerciwnym razie wpisz litere ''n''.";
+        cout << "\n\n\nCzy chcesz utworzyc kolejna druzyne i skopiowac zawodnikow z ostatniej druzyny ??";
+        cout << "\nW przypadku ponownego uruchomienia wpisz litere ''t'', w przerciwnym razie wpisz litere ''n''.\n";
+        cin >> choice2;
         if (choice2 == 't')
         {
-            //championsLeage TheBestOfTheBest(1, OneTeam(TeamNumbers+1, OnePlayer(PlayersNumber) ) );
-            //teamTeam.push_back(TeamName(GetTeamName));
-            //CopyTeam(TheBestOfTheBest);
+            //ponizej zwiekszam wilkosc wektora
+            NewTeamNumbers=TeamNumbers+1;
+            //championsLeage TheBestOfTheBest.resize(1, OneTeam(NewTeamNumbers, OnePlayer(PlayersNumber)));
             
+            for ( int il=0 ; il<PlayersNumber ; il++ )
+            {
+                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerName=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerName;
+                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerSurname=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerSurname;
+                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerHeight=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerHeight;
+                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerAge=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerAge;
+                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerPosition=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerPosition;
+            }
         }
         else
         {
@@ -180,8 +189,8 @@ int main()
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         //ponizej wyswietlam wszystkich zawodnikow
-        cout << "\nCzy chcesz wyswietlic zawodnikow ze wszystkich druzyn ??";
-        cout << "\nW przypadku wyboru ''tak'' wpisz litere ''t'', w przerciwnym razie wpisz litere ''n''.";
+        cout << "\n\n\nCzy chcesz wyswietlic zawodnikow ze wszystkich druzyn ??";
+        cout << "\nW przypadku wyboru ''tak'' wpisz litere ''t'', w przerciwnym razie wpisz litere ''n''.\n";
         cin >> choice3;
         if (choice3 == 't')
         {
@@ -209,10 +218,10 @@ int main()
         ///////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////
         //ponizej wyswietlam okreslonego zawodnika
-        cout << "Czy chcesz wyswietlic dane okreslonego zawodnika z okreslonej druzyny ??";
-        cout << "W przypadku ponownego uruchomienia wpisz litere ''t'', w przerciwnym razie wpisz litere ''n''.";
-        cin >> choice;
-        if(choice=='t')
+        cout << "\n\n\nCzy chcesz wyswietlic dane okreslonego zawodnika z okreslonej druzyny ??";
+        cout << "W przypadku ponownego uruchomienia wpisz litere ''t'', w przerciwnym razie wpisz litere ''n''.\n";
+        cin >> choice4;
+        if (choice4 =='t')
         {
             cout << "Podaj numer druzyny ktorej dane zawodnika chcesz wyswietlic\n";
             cin >> team_number;
