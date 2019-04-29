@@ -88,15 +88,15 @@ int main()
         //wypelnic innym typem, a mianowicie typem struktury z klasy ktora zostala utworzona i dodatkowo
         //zostal stworzony konstruktor "PersonalOfPlayer. W C++ struktura "struct" i klasa "class"
         //sa bardzo pododbne
-        typedef vector<PersonalOfPlayer>OnePlayer;
+        vector<vector<PersonalOfPlayer>>OnePlayer;
         //Ponizej tworze kontener dla zespolu pojedynczego ktory zawiera w sobie struktury informacji o
         //pojedynczych zawodnikach. Czyli wypelniam kontener "OneTeam" pojedynczym kontenerami = zawodnikami,
         //co czynie podajac liczbe iteracji w petli.
         //ponizej takze przekazuje informacje, że wypełnienie kontenera "OneTeam" bedzie dokonane poprzez
         //typ którym jest wektor "OnePlayer". Tak tworzę drużynę.
-        typedef vector<OnePlayer>OneTeam;
+        vector<vector<vector<PersonalOfPlayer>>>OneTeam;
         //ponizej tworze wektor ktory bedzie grupowac wszystkie zespoly do kontenerka "ChampionsLeage"
-        typedef vector<OneTeam>championsLeage;
+        vector<vector<vector<vector<PersonalOfPlayer>>>>championsLeage;
         cout << "Super ! Wlasnie uruchomiles program do labolatorium nr 3 na kierunku Informatyka\n";
         cout << "Program umozliwi Ci stworzenie kilku druzyn. Od 2 do ''n''.\n";
         cout << "Jezeli bedziesz chcial to bedziesz mogl przekopiowac za pomoca konstruktora zawodnikow\n";
@@ -168,9 +168,9 @@ int main()
         if (choice2 == 't')
         {
             //ponizej zwiekszam wilkosc wektora
-            NewTeamNumbers=TeamNumbers+1;
+            //NewTeamNumbers=TeamNumbers+1;
             //championsLeage TheBestOfTheBest.resize(1, OneTeam(NewTeamNumbers, OnePlayer(PlayersNumber)));
-            
+            /*
             for ( int il=0 ; il<PlayersNumber ; il++ )
             {
                 TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerName=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerName;
@@ -179,6 +179,7 @@ int main()
                 TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerAge=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerAge;
                 TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerPosition=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerPosition;
             }
+            */
         }
         else
         {
