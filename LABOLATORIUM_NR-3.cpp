@@ -65,9 +65,6 @@ public:
 //ponizej takze przekazuje informacje, że wypełnienie kontenera "OneTeam" bedzie dokonane poprzez
 //typ którym jest wektor "OnePlayer". Tak tworzę drużynę.
 vector<vector<PersonalOfPlayer>>OneTeam;
-
-//vector(const vector& v); konstruktor kopiujacy
-//vector& operator=(const vector& v);4
     
 };
 
@@ -113,10 +110,11 @@ int main()
         cin >> TeamNumbers;
         cout << "\n Super ! Teraz podaj ile zawodnikow moze liczyc kazda druzyna dopuszczona do turnieju:\n";
         cin >> PlayersNumber;
+        
+        
+        
         //ponizej definiuje wektor wielowymiarowy z okreslona liczba druzyn oraz zawodnikow
-        
-        
-        vector<vector<vector<PersonalOfPlayer>>>championsLeage(1, vector<vector<PersonalOfPlayer>>(TeamNumbers, vector<PersonalOfPlayer>(PlayersNumber) ) );
+        vector<vector<vector<PersonalOfPlayer>>>championsLeage(1,vector<vector<PersonalOfPlayer>>(TeamNumbers, vector<PersonalOfPlayer>(PlayersNumber) ) );
         
         
         
@@ -176,6 +174,10 @@ int main()
         cin >> choice2;
         if (choice2 == 't')
         {
+            championsLeage.resize(1,vector<vector<PersonalOfPlayer>>(TeamNumbers+1, vector<PersonalOfPlayer>(PlayersNumber) ) );
+            
+           
+            
             //ponizej zwiekszam wilkosc wektora
             //NewTeamNumbers=TeamNumbers+1;
             //championsLeage TheBestOfTheBest.resize(1, OneTeam(NewTeamNumbers, OnePlayer(PlayersNumber)));
@@ -206,7 +208,7 @@ int main()
         {
             for (int ij=0 ; ij<TeamNumbers  ; ij++)
             {
-                cout << "\n\n\nZawodnicy druzyny " << teamTeam[ij].nameOfTeam << "maja nastepujace dane:\n";
+                cout << "\n\n\nZawodnicy druzyny " << teamTeam[ij].nameOfTeam << " maja nastepujace dane:\n";
                 
                 for ( int io=0 ; io<PlayersNumber ; io++)
                 {
@@ -237,8 +239,8 @@ int main()
             cin >> team_number;
             cout << "Podaj numer zawodnika ktoreg dane chcesz wyswietlic\n";
             cin >> player_number;
-            cout << "Zawodnik druzyny " << teamTeam[team_number].nameOfTeam << " ma nastepujace dane:";
-            cout << "n\nazwisko zawodnika:";
+            cout << "\nZawodnik druzyny " << teamTeam[team_number].nameOfTeam << " ma nastepujace dane:";
+            cout << "nazwisko zawodnika:";
             cout << championsLeage[0][team_number-1][player_number-1].PlayerName << "\n" << endl;
             cout << "Imie zawodnika:";
             cout << championsLeage[0][team_number-1][player_number-1].PlayerSurname << "\n" << endl;
