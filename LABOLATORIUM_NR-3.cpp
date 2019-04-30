@@ -23,7 +23,7 @@ public:
 //jednak klasa mi umozliwa definiowanie dostepnu do ziennych
 class PersonalOfPlayer
 {
-//definiuje zmienne do ktorych jest ogolny dostep w klasie publicznej
+    //definiuje zmienne do ktorych jest ogolny dostep w klasie publicznej
 public:
     string PlayerName;
     string PlayerSurname;
@@ -35,11 +35,11 @@ public:
 //ponizej okreslam klase kopiujaca. Korzystam dodatkowo z konstruktora.
 class CopyTeam
 {
-//ponizej definiuje konstruktor CopyTeam.
+    //ponizej definiuje konstruktor CopyTeam.
 public:
     CopyTeam(const CopyTeam&);
 private:
-//w przestrzeni prywatnej definiuje zmienne i ich typy
+    //w przestrzeni prywatnej definiuje zmienne i ich typy
     string PlayerName;
     string PlayerSurname;
     string PlayerHeight;
@@ -56,9 +56,20 @@ CopyTeam::CopyTeam(const CopyTeam &source)
     PlayerPosition=source.PlayerPosition;
 }
 
+class Team
+{
+public:
+//Ponizej tworze kontener dla zespolu pojedynczego ktory zawiera w sobie struktury informacji o
+//pojedynczych zawodnikach. Czyli wypelniam kontener "OneTeam" pojedynczym kontenerami = zawodnikami,
+//co czynie podajac liczbe iteracji w petli.
+//ponizej takze przekazuje informacje, że wypełnienie kontenera "OneTeam" bedzie dokonane poprzez
+//typ którym jest wektor "OnePlayer". Tak tworzę drużynę.
+vector<vector<PersonalOfPlayer>>OneTeam;
 
 //vector(const vector& v); konstruktor kopiujacy
 //vector& operator=(const vector& v);4
+    
+};
 
 int main()
 {
@@ -88,15 +99,10 @@ int main()
         //wypelnic innym typem, a mianowicie typem struktury z klasy ktora zostala utworzona i dodatkowo
         //zostal stworzony konstruktor "PersonalOfPlayer. W C++ struktura "struct" i klasa "class"
         //sa bardzo pododbne
-        vector<vector<PersonalOfPlayer>>OnePlayer;
-        //Ponizej tworze kontener dla zespolu pojedynczego ktory zawiera w sobie struktury informacji o
-        //pojedynczych zawodnikach. Czyli wypelniam kontener "OneTeam" pojedynczym kontenerami = zawodnikami,
-        //co czynie podajac liczbe iteracji w petli.
-        //ponizej takze przekazuje informacje, że wypełnienie kontenera "OneTeam" bedzie dokonane poprzez
-        //typ którym jest wektor "OnePlayer". Tak tworzę drużynę.
-        vector<vector<vector<PersonalOfPlayer>>>OneTeam;
+        vector<PersonalOfPlayer>OnePlayer;
+        
         //ponizej tworze wektor ktory bedzie grupowac wszystkie zespoly do kontenerka "ChampionsLeage"
-        vector<vector<vector<vector<PersonalOfPlayer>>>>championsLeage;
+        
         cout << "Super ! Wlasnie uruchomiles program do labolatorium nr 3 na kierunku Informatyka\n";
         cout << "Program umozliwi Ci stworzenie kilku druzyn. Od 2 do ''n''.\n";
         cout << "Jezeli bedziesz chcial to bedziesz mogl przekopiowac za pomoca konstruktora zawodnikow\n";
@@ -108,7 +114,10 @@ int main()
         cout << "\n Super ! Teraz podaj ile zawodnikow moze liczyc kazda druzyna dopuszczona do turnieju:\n";
         cin >> PlayersNumber;
         //ponizej definiuje wektor wielowymiarowy z okreslona liczba druzyn oraz zawodnikow
-        championsLeage TheBestOfTheBest(1, OneTeam(TeamNumbers, OnePlayer(PlayersNumber) ) );
+        
+        
+        vector<vector<vector<PersonalOfPlayer>>>championsLeage(1, vector<vector<PersonalOfPlayer>>(TeamNumbers, vector<PersonalOfPlayer>(PlayersNumber) ) );
+        
         
         
         
@@ -125,37 +134,37 @@ int main()
                 cout << "\nPodaj nazwisko zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string name;
                 cin >> name;
-                TheBestOfTheBest[0][j][i].PlayerName=name;
+                championsLeage[0][j][i].PlayerName=name;
                 
                 cout << "\nPodaj imie zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string surname;
                 cin >> surname;
-                TheBestOfTheBest[0][j][i].PlayerSurname=surname;
+                championsLeage[0][j][i].PlayerSurname=surname;
                 
                 cout << "\nPodaj wzrost zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string height;
                 cin >> height;
-                TheBestOfTheBest[0][j][i].PlayerHeight=height;
+                championsLeage[0][j][i].PlayerHeight=height;
                 
                 cout << "\nPodaj wiek zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string age;
                 cin >> age;
-                TheBestOfTheBest[0][j][i].PlayerAge=age;
+                championsLeage[0][j][i].PlayerAge=age;
                 
                 cout << "\nPodaj pozycje zawodnika nr\t" << i+1 << "\t dla druzyny numer:" << j+1 << ":\n";
                 string position;
                 cin >> position;
-                TheBestOfTheBest[0][j][i].PlayerPosition=position;
+                championsLeage[0][j][i].PlayerPosition=position;
             }
             //ponizej aby sprawdzic czy wprowadzilem poprawnie korzystam z petli iteracyjnej do wypisania
             //poszczegolnych danych pojedynczego zawodnika
             for ( int ii=0 ; ii<PlayersNumber ; ii++)
             {
-                cout << "\nNazwisko zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerName;
-                cout << "\nImie zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerSurname;
-                cout << "\nWzrost zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerHeight;
-                cout << "\nWiek zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerAge;
-                cout << "\nPozycja zawodnika nr:\t" << ii+1 << " to " << TheBestOfTheBest[0][j][ii].PlayerPosition;
+                cout << "\nNazwisko zawodnika nr:\t" << ii+1 << " to " << championsLeage[0][j][ii].PlayerName;
+                cout << "\nImie zawodnika nr:\t" << ii+1 << " to " << championsLeage[0][j][ii].PlayerSurname;
+                cout << "\nWzrost zawodnika nr:\t" << ii+1 << " to " << championsLeage[0][j][ii].PlayerHeight;
+                cout << "\nWiek zawodnika nr:\t" << ii+1 << " to " << championsLeage[0][j][ii].PlayerAge;
+                cout << "\nPozycja zawodnika nr:\t" << ii+1 << " to " << championsLeage[0][j][ii].PlayerPosition;
             }
         }
         
@@ -171,15 +180,15 @@ int main()
             //NewTeamNumbers=TeamNumbers+1;
             //championsLeage TheBestOfTheBest.resize(1, OneTeam(NewTeamNumbers, OnePlayer(PlayersNumber)));
             /*
-            for ( int il=0 ; il<PlayersNumber ; il++ )
-            {
-                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerName=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerName;
-                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerSurname=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerSurname;
-                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerHeight=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerHeight;
-                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerAge=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerAge;
-                TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerPosition=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerPosition;
-            }
-            */
+             for ( int il=0 ; il<PlayersNumber ; il++ )
+             {
+             TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerName=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerName;
+             TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerSurname=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerSurname;
+             TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerHeight=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerHeight;
+             TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerAge=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerAge;
+             TheBestOfTheBest[0][NewTeamNumbers-1][il].PlayerPosition=TheBestOfTheBest[0][TeamNumbers-1][il].PlayerPosition;
+             }
+             */
         }
         else
         {
@@ -201,11 +210,11 @@ int main()
                 
                 for ( int io=0 ; io<PlayersNumber ; io++)
                 {
-                    cout << "\nNazwisko zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerName;
-                    cout << "\nImie zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerSurname;
-                    cout << "\nWzrost zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerHeight;
-                    cout << "\nWiek zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerAge;
-                    cout << "\nPozycja zawodnika nr:\t" << io+1 << " to " << TheBestOfTheBest[0][ij][io].PlayerPosition;
+                    cout << "\nNazwisko zawodnika nr:\t" << io+1 << " to " << championsLeage[0][ij][io].PlayerName;
+                    cout << "\nImie zawodnika nr:\t" << io+1 << " to " << championsLeage[0][ij][io].PlayerSurname;
+                    cout << "\nWzrost zawodnika nr:\t" << io+1 << " to " << championsLeage[0][ij][io].PlayerHeight;
+                    cout << "\nWiek zawodnika nr:\t" << io+1 << " to " << championsLeage[0][ij][io].PlayerAge;
+                    cout << "\nPozycja zawodnika nr:\t" << io+1 << " to " << championsLeage[0][ij][io].PlayerPosition;
                 }
             }
         }
@@ -230,15 +239,15 @@ int main()
             cin >> player_number;
             cout << "Zawodnik druzyny " << teamTeam[team_number].nameOfTeam << " ma nastepujace dane:";
             cout << "n\nazwisko zawodnika:";
-            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerName << "\n" << endl;
+            cout << championsLeage[0][team_number-1][player_number-1].PlayerName << "\n" << endl;
             cout << "Imie zawodnika:";
-            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerSurname << "\n" << endl;
+            cout << championsLeage[0][team_number-1][player_number-1].PlayerSurname << "\n" << endl;
             cout << "Wzrost zawodnika:";
-            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerHeight << "\n" << endl;
+            cout << championsLeage[0][team_number-1][player_number-1].PlayerHeight << "\n" << endl;
             cout << "Wiek zawodnika:";
-            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerAge << "\n" << endl;
+            cout << championsLeage[0][team_number-1][player_number-1].PlayerAge << "\n" << endl;
             cout << "Pozycja na boisku zawodnika:";
-            cout << TheBestOfTheBest[0][team_number-1][player_number-1].PlayerPosition << "\n" << endl;
+            cout << championsLeage[0][team_number-1][player_number-1].PlayerPosition << "\n" << endl;
         }
         else
         {
